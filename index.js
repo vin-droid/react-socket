@@ -66,8 +66,10 @@ app.post('/webhook', function (req, res) {
             pageEntry.messaging.forEach(function (messagingEvent) {
 
                 var senderID = messagingEvent.sender.id;
-                sendTextMessage(senderID, messagingEvent.message.text);
                 console.log("Hello ");
+                if (messagingEvent.message != undefined){
+                    sendTextMessage(senderID, messagingEvent.message.text);
+                }                
                 console.log("message event: ", messagingEvent);
                 if (messagingEvent.optin) {
                     console.log("optin: ", messagingEvent);
