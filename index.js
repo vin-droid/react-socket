@@ -70,7 +70,7 @@ app.post('/webhook', function (req, res) {
                 if (messagingEvent.message != undefined){
                     // sendTextMessage(senderID, messagingEvent.message.text);
                 }                
-                console.log("message event: ", messagingEvent);
+                // console.log("message event: ", messagingEvent);
                 if (messagingEvent.optin) {
                     console.log("optin: ", messagingEvent);
                     receivedAuthentication(messagingEvent);
