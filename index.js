@@ -68,7 +68,7 @@ app.post('/webhook', function (req, res) {
                 var senderID = messagingEvent.sender.id;
                 console.log("Hello ");
                 if (messagingEvent.message != undefined){
-                    sendTextMessage(senderID, messagingEvent.message.text);
+                    // sendTextMessage(senderID, messagingEvent.message.text);
                 }                
                 console.log("message event: ", messagingEvent);
                 if (messagingEvent.optin) {
@@ -77,6 +77,8 @@ app.post('/webhook', function (req, res) {
                 } else if (messagingEvent.message) {
                     console.log("message: ", messagingEvent);
                     // receivedMessage(messagingEvent);
+                    sendTextMessage(senderID, messagingEvent.message.text);
+
                 } else if (messagingEvent.delivery) {
                     console.log("delivery: ", messagingEvent);
                     // receivedDeliveryConfirmation(messagingEvent);
