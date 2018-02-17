@@ -2,6 +2,7 @@ const
     express = require('express'),
     bodyParser = require('body-parser'),
     config = require('config'),
+    request = require('request'),
     app = express().use(bodyParser.json());
 
 // App Secret can be retrieved from the App Dashboard
