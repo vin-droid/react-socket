@@ -76,6 +76,12 @@ app.post('/webhook', function (req, res) {
                     receivedAuthentication(messagingEvent);
                 } else if (messagingEvent.message) {
                     console.log("message: ", messagingEvent);
+                    if (messagingEvent.message.attachments != undefined){
+                        messagingEvent.message.attachments.forEach(function (attachment) {
+                            console.log(attachment.payload.url);
+                        }) ;
+                    }
+                    console.log("attachments: ", messagingEvent.message.attachments);
                     // receivedMessage(messagingEvent);
                     sendTextMessage(senderID, messagingEvent.message.text);
 
