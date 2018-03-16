@@ -5,6 +5,8 @@ const socketIo = require('socket.io')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackConfig = require('./webpack.config.js')
+const config = require('config')
+const request = require('request')
 
 const app = express()
 const server = http.createServer(app)
@@ -63,12 +65,10 @@ const SERVER_URL = (process.env.SERVER_URL) ?
     (process.env.SERVER_URL) :
     config.get('serverURL');
 
-
-
-
 // Creates the endpoint for our webhook 
 // Adds support for GET requests to our webhook
 if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
+
     console.error("Missing config values");
     process.exit(1);
 }
