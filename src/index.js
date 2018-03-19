@@ -23,7 +23,8 @@ class App extends React.Component {
   notifyMsg(message) {
     Lobibox.notify('default', {
       continueDelayOnInactiveTab: true,
-      msg: message.body
+      msg: message.body,
+      title: message.from
     });
   }
 
