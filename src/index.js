@@ -1,6 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import io from 'socket.io-client'
+import $ from "jquery/dist/jquery.min.js";
+window.jQuery = $;
+window.$ = $;
+global.jQuery = $;
 
 class App extends React.Component {
   constructor (props) {
@@ -8,11 +12,19 @@ class App extends React.Component {
     this.state = { messages: [] }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.socket = io('/')
     this.socket.on('message', message => {
+      this.notifyMsg(message);
       this.setState({ messages: [message, ...this.state.messages] })
     })
+  }
+
+  notifyMsg(message) {
+    Lobibox.notify('default', {
+      continueDelayOnInactiveTab: true,
+      msg: message.body
+    });
   }
 
   handleSubmit = event => {
@@ -23,6 +35,8 @@ class App extends React.Component {
         from: 'Me'
       }
       this.setState({ messages: [message, ...this.state.messages] })
+      $('#root').css('background', "red")
+
       this.socket.emit('message', body)
       event.target.value = ''
     }
@@ -35,8 +49,6 @@ class App extends React.Component {
     })
     return (
       <div>
-        <h1>ez.ngrok.io</h1>
-        <h1>+18622562970</h1>
         <input type='text' placeholder='Enter a message...' onKeyUp={this.handleSubmit} />
         {messages}
       </div>
