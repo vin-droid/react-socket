@@ -1,7 +1,7 @@
+
 const express = require('express')
 const http = require('http')
 const bodyParser = require('body-parser')
-const socketIo = require('socket.io')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackConfig = require('./webpack.config.js')
@@ -16,15 +16,19 @@ app.use(express.static(__dirname + '/public'))
 app.use(webpackDevMiddleware(webpack(webpackConfig)))
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.post('/', (req, res) => {
-  const { Body, From, MediaUrl0 } = req.body
-  const message = {
-    body: Body,
-    from: From.slice(8),
-    img: MediaUrl0
-  }
-  io.emit('message', message)
-  res.send(`
+
+
+app.use('/api', api);
+
+api.post('/', (req, res) =>{
+    const { Body, From, MediaUrl0 } = req.body
+    const message = {
+        body: Body,
+        from: From.slice(8),
+        img: MediaUrl0
+    }
+    io.emit('message', message)
+    res.send(`
            <Response>
             <Message>Thanks for texting!</Message>
            </Response>
@@ -39,6 +43,7 @@ io.on('connection', socket => {
     })
   })
 })
+
 
 server.listen(process.env.PORT || 3000, () => console.log('webhook is listening'));
 
@@ -83,7 +88,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
  * setup is the same token used here.
  *
  */
-app.get('/webhook', function (req, res) {
+api.get('/webhook', function (req, res) {
     if (req.query['hub.mode'] === 'subscribe' &&
         req.query['hub.verify_token'] === VALIDATION_TOKEN) {
         console.log("Validating webhook");
@@ -94,7 +99,7 @@ app.get('/webhook', function (req, res) {
     }
 });
 
-app.post('/webhook', function (req, res) {
+api.post('/webhook', function (req, res) {
     var data = req.body;
 
     // Make sure this is a page subscription
