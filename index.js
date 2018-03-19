@@ -130,12 +130,12 @@ app.post('/webhook', function (req, res) {
                             console.log("attachment url:", attachment.payload.url);
                         });
                     }
-                    // receivedMessage(messagingEvent);
-                    const message = {
-                        body: messagingEvent.message.text,
-                        from: messagingEvent.sender.id
-                    }
-                    io.emit('message', message)
+                    // // receivedMessage(messagingEvent);
+                    // const message = {
+                    //     body: messagingEvent.message.text,
+                    //     from: messagingEvent.sender.id
+                    // }
+                    // io.emit('message', message)
                     sendTextMessage(senderID, messagingEvent.message.text);
 
                 } else if (messagingEvent.delivery) {
