@@ -143,7 +143,7 @@ app.post('/api/webhook', function (req, res) {
                     }
                     // // receivedMessage(messagingEvent);
                     console.log("================================is_eco===>",messagingEvent.message.is_eco)
-                    if (messagingEvent.message.is_eco){
+                    if (messagingEvent.message.is_echo){
 
                     }
                     else{
