@@ -142,12 +142,18 @@ app.post('/api/webhook', function (req, res) {
                         });
                     }
                     // // receivedMessage(messagingEvent);
-                    const message = {
-                        body: messagingEvent.message.text,
-                        from: messagingEvent.sender.id
+                    if (message.is_eco){
+
                     }
-                    io.emit('message', message)
-                    sendTextMessage(senderID, messagingEvent.message.text);
+                    else{
+                        const message = {
+                            body: messagingEvent.message.text,
+                            from: messagingEvent.sender.id
+                        }
+                        io.emit('message', message)
+                        sendTextMessage(senderID, messagingEvent.message.text);
+                    }
+
 
                 } else if (messagingEvent.delivery) {
                     console.log("delivery: ", messagingEvent);
