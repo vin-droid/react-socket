@@ -142,7 +142,7 @@ app.post('/api/webhook', function (req, res) {
                         });
                     }
                     // // receivedMessage(messagingEvent);
-                    if (message.is_eco){
+                    if (messagingEvent.message.is_eco){
 
                     }
                     else{
