@@ -13,10 +13,12 @@ const server = http.createServer(app)
 const io = socketIo(server)
 
 app.use(express.static(__dirname + '/public'))
+app.use(bodyParser.json()); 
 app.use(webpackDevMiddleware(webpack(webpackConfig)))
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/', (req, res) => {
+    console.log(req.body);
   const { Body, From, MediaUrl0 } = req.body
   const message = {
     body: Body,
@@ -83,7 +85,16 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
  * setup is the same token used here.
  *
  */
-app.get('/webhook', function (req, res) {
+app.get('/api', function (req, res, next) {
+    let data = {
+        message: 'Hello World!'
+    };
+    res.status(200).send(data);
+});
+
+
+ app.get('/api/webhook', function (req, res) {
+     console.log("Validating webhook");     
     if (req.query['hub.mode'] === 'subscribe' &&
         req.query['hub.verify_token'] === VALIDATION_TOKEN) {
         console.log("Validating webhook");
@@ -94,9 +105,9 @@ app.get('/webhook', function (req, res) {
     }
 });
 
-app.post('/webhook', function (req, res) {
+app.post('/api/webhook', function (req, res) {
     var data = req.body;
-
+ console.log(req.body);
     // Make sure this is a page subscription
     if (data.object == 'page') {
         // Iterate over each entry
