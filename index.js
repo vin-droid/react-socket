@@ -130,25 +130,22 @@ app.post('/api/webhook', function (req, res) {
                     receivedAuthentication(messagingEvent);
                 } else if (messagingEvent.message) {
                     console.log("message: ", messagingEvent);
-                    if (messagingEvent.message.attachments != undefined){
-                        messagingEvent.message.attachments.forEach(function (attachment) {
-                            console.log("attachment url:",attachment.payload.url);
-                        }) ;
-                    }
-                    if (messagingEvent.message.attachments != undefined) {
-                        messagingEvent.message.attachments.forEach(function (attachment) {
-                            console.log("attachment type:", attachment.payload.type);
-                            console.log("attachment url:", attachment.payload.url);
-                        });
-                    }
-                    // // receivedMessage(messagingEvent);
-                    console.log("================================is_eco===>",messagingEvent.message.is_eco)
-                    if (messagingEvent.message.is_echo){
 
-                    }
-                    else{
+                    // // receivedMessage(messagingEvent);
+                    if (messagingEvent.message.is_echo == undefined){
+                        if (messagingEvent.message.attachments != undefined) {
+                            messagingEvent.message.attachments.forEach(function (attachment) {
+                                console.log("attachment url:", attachment.payload.url);
+                            });
+                        }
+                        if (messagingEvent.message.attachments != undefined) {
+                            messagingEvent.message.attachments.forEach(function (attachment) {
+                                console.log("attachment type:", attachment.payload.type);
+                                console.log("attachment url:", attachment.payload.url);
+                            });
+                        }
                         const message = {
-                            body: messagingEvent.message.text,
+                            body: messagingEvent.message,
                             from: messagingEvent.sender.id
                         }
                         io.emit('message', message)

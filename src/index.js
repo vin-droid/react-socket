@@ -5,6 +5,7 @@ import $ from "jquery/dist/jquery.min.js";
 window.jQuery = $;
 window.$ = $;
 global.jQuery = $;
+import './ui/css/style.css';
 
 class App extends React.Component {
   constructor (props) {
