@@ -17,7 +17,7 @@ class App extends React.Component {
   componentDidMount() {
     this.socket = io('/')
     this.socket.on('message', message => {
-      Notifier.notify({msg: message.body, image: message.image})
+      Notifier.notify({text: message.body, image: message.image})
       this.setState({ messages: [message, ...this.state.messages] })
     })
   }

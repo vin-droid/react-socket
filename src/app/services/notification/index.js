@@ -11,7 +11,7 @@ module.exports = {
   },
   notify: function (msg, config = {}) {
     if (msg.image) {
-      config.size || 'large'
+      config.size = config.size || 'large'
     }
     Lobibox.notify(config.type || 'success', {
       title: msg.title,
