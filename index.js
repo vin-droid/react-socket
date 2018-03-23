@@ -134,7 +134,7 @@ app.post('/api/webhook', function (req, res) {
                     // // receivedMessage(messagingEvent);
                     if (messagingEvent.message.is_echo == undefined){
                         let message = {
-                            body: messagingEvent.message,
+                            body: messagingEvent.message.text,
                             from: messagingEvent.sender.id
                         }
                         if (messagingEvent.message.attachments != undefined) {
