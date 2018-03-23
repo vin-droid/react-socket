@@ -18,16 +18,10 @@ class App extends React.Component {
     this.socket = io('/')
     this.socket.on('message', message => {
       Notifier.notify({text: message.body, image: message.image})
-      this.setState({ messages: [message, ...this.state.messages] })
+      // this.setState({ messages: [message, ...this.state.messages] })
     })
   }
-  notifyMsg(message) {
-    Lobibox.notify('default', {
-      continueDelayOnInactiveTab: true,
-      msg: message.body,
-      title: message.from
-    });
-  }
+
 
   handleSubmit = event => {
     const body = event.target.value
