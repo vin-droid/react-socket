@@ -133,23 +133,19 @@ app.post('/api/webhook', function (req, res) {
 
                     // // receivedMessage(messagingEvent);
                     if (messagingEvent.message.is_echo == undefined){
-                        if (messagingEvent.message.attachments != undefined) {
-                            messagingEvent.message.attachments.forEach(function (attachment) {
-                                console.log("attachment url:", attachment.payload.url);
-                            });
-                        }
-                        if (messagingEvent.message.attachments != undefined) {
-                            messagingEvent.message.attachments.forEach(function (attachment) {
-                                console.log("attachment type:", attachment.payload.type);
-                                console.log("attachment url:", attachment.payload.url);
-                            });
-                        }
-                        const message = {
+                        let message = {
                             body: messagingEvent.message,
                             from: messagingEvent.sender.id
                         }
+                        if (messagingEvent.message.attachments != undefined) {
+                            messagingEvent.message.attachments.forEach(function (attachment) {
+                                console.log("attachment url:", attachment.payload.url);
+                                message.image = attachment.payload.url;
+                            });
+                        }
+
                         io.emit('message', message)
-                        sendTextMessage(senderID, messagingEvent.message.text);
+                        sendTextMessage(senderID, messagingEvent.message.text || "Recieved image");
                     }
 
 

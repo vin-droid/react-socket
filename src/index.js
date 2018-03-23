@@ -6,6 +6,7 @@ window.jQuery = $;
 window.$ = $;
 global.jQuery = $;
 import './ui/css/style.css';
+import Notifier from './app/services/notification';
 
 class App extends React.Component {
   constructor (props) {
@@ -16,11 +17,10 @@ class App extends React.Component {
   componentDidMount() {
     this.socket = io('/')
     this.socket.on('message', message => {
-      this.notifyMsg(message);
+      Notifier.notify({msg: message.body, image: message.image})
       this.setState({ messages: [message, ...this.state.messages] })
     })
   }
-
   notifyMsg(message) {
     Lobibox.notify('default', {
       continueDelayOnInactiveTab: true,
