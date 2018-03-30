@@ -14,7 +14,7 @@ module.exports = {
       config.size = config.size || 'large'
     }
     Lobibox.notify(config.type || 'success', {
-      title: msg.title || 'Message',
+      title: msg.from + 'says' || 'Message',
       size: config.size || 'normal',              // normal, mini, large
       rounded: config.rounded || false,
       icon: config.icon || false,

@@ -34,10 +34,11 @@ app.post('/', (req, res) => {
 })
 
 io.on('connection', socket => {
-  socket.on('message', body => {
+  socket.on('message', message => {
     socket.broadcast.emit('message', {
-      body,
-      from: socket.id.slice(8)
+        text: message.text,
+        image: message.image || '',
+        from: message.from
     })
   })
 })
@@ -134,7 +135,7 @@ app.post('/api/webhook', function (req, res) {
                     // // receivedMessage(messagingEvent);
                     if (messagingEvent.message.is_echo == undefined){
                         let message = {
-                            body: messagingEvent.message.text,
+                            text: messagingEvent.message.text,
                             from: messagingEvent.sender.id
                         }
                         if (messagingEvent.message.attachments != undefined) {
