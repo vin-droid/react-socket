@@ -134,9 +134,10 @@ app.post('/api/webhook', function (req, res) {
 
                     // // receivedMessage(messagingEvent);
                     if (messagingEvent.message.is_echo == undefined){
+                        let senderName = findUser(senderID)
                         let message = {
                             text: messagingEvent.message.text,
-                            from: messagingEvent.sender.id
+                            from: senderName
                         }
                         if (messagingEvent.message.attachments != undefined) {
                             messagingEvent.message.attachments.forEach(function (attachment) {
@@ -238,6 +239,32 @@ function callSendAPI(messageData) {
             } else {
                 console.log("Successfully called Send API for recipient %s",
                     recipientId);
+            }
+        } else {
+            console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+        }
+    });
+}
+
+function findUser(senderID) {
+    request({
+        uri: 'https://graph.facebook.com/v2.6/' + senderID + '/',
+        qs: { access_token: PAGE_ACCESS_TOKEN },
+        method: 'GET',
+        json: senderID
+
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var senderID = body.id;
+            var name = body.name;
+
+            if (name) {
+                console.log("Successfully fetch user %s with name %s",
+                    senderID, name);
+                return name
+            } else {
+                console.log("error occur on fetch user %s with name %s",
+                    senderID, name);
             }
         } else {
             console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
