@@ -247,7 +247,6 @@ function callSendAPI(messageData) {
 }
 
 function findUser(senderID) {
-    var name = ''
     request({
         uri: 'https://graph.facebook.com/v2.6/' + senderID + '?fields=name',
         qs: { access_token: PAGE_ACCESS_TOKEN },
