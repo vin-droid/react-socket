@@ -233,7 +233,6 @@ function callSendAPI(messageData) {
             var recipientId = body.recipient_id;
             var messageId = body.message_id;
 
-            console.log(response,body)
             if (messageId) {
                 console.log("Successfully sent message with id %s to recipient %s",
                     messageId, recipientId);
@@ -248,6 +247,7 @@ function callSendAPI(messageData) {
 }
 
 function findUser(senderID) {
+    var name = ''
     request({
         uri: 'https://graph.facebook.com/v2.6/' + senderID + '?fields=name',
         qs: { access_token: PAGE_ACCESS_TOKEN },
@@ -257,12 +257,11 @@ function findUser(senderID) {
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var senderID = body.id;
-            var name = body.name;
+            name = body.name;
 
             if (name) {
                 console.log("Successfully fetch user %s with name %s",
                     senderID, name);
-                return name
             } else {
                 console.log("error occur on fetch user %s with name %s",
                     senderID, name);
@@ -271,5 +270,6 @@ function findUser(senderID) {
             console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
         }
     });
+    return name
 }
 
